@@ -3,6 +3,7 @@ const todoInput = document.getElementById('todo-input');
 const todoTime = document.getElementById('todo-time');
 const nowBtn = document.getElementById('now-btn');
 const categorySelect = document.getElementById('category-select');
+const categoryChips = document.querySelectorAll('.category-chips .chip');
 const importantCheck = document.getElementById('important-check');
 const canWaitCheck = document.getElementById('can-wait-check');
 const addBtn = document.getElementById('add-btn');
@@ -26,8 +27,35 @@ const editCanWait = document.getElementById('edit-can-wait');
 // 2. Estado de la aplicación
 let todos = [];
 let editingId = null;
+let selectedCategory = 'trabajo';
 
-// 3. Cargar datos del localStorage
+// 3. Inicialización
+window.addEventListener('DOMContentLoaded', () => {
+    loadFromLocalStorage();
+    loadTheme();
+    renderTodos();
+    updateStats();
+    initCategoryChips();
+    addEventListeners();
+});
+
+// Inicializar selección de categoría con chips
+function initCategoryChips() {
+    categoryChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            selectedCategory = chip.dataset.category;
+            categorySelect.value = selectedCategory;
+            updateChipUI();
+        });
+    });
+    updateChipUI();
+}
+
+function updateChipUI() {
+    categoryChips.forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.category === selectedCategory);
+    });
+}
 function loadFromLocalStorage() {
     const saved = localStorage.getItem('todos');
     if (saved) {
@@ -66,7 +94,7 @@ function addTodo() {
         id: Date.now(),
         text: taskText,
         completed: false,
-        category: categorySelect.value,
+        category: selectedCategory,
         time: todoTime.value,
         important: importantCheck.checked,
         canWait: canWaitCheck.checked
@@ -75,7 +103,6 @@ function addTodo() {
     todos.push(newTodo);
     todoInput.value = "";
     todoTime.value = "";
-    categorySelect.value = "trabajo";
     importantCheck.checked = false;
     canWaitCheck.checked = false;
     todoInput.focus();
@@ -219,21 +246,23 @@ function setCurrentTime() {
 }
 
 // 13. Event Listeners
-addBtn.addEventListener('click', addTodo);
-nowBtn.addEventListener('click', setCurrentTime);
-todoInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') addTodo();
-});
+function addEventListeners() {
+    addBtn.addEventListener('click', addTodo);
+    nowBtn.addEventListener('click', setCurrentTime);
+    todoInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addTodo();
+    });
 
-themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('click', toggleTheme);
 
-closeModalBtn.addEventListener('click', closeEditModal);
-cancelEditBtn.addEventListener('click', closeEditModal);
-saveEditBtn.addEventListener('click', saveEdit);
+    closeModalBtn.addEventListener('click', closeEditModal);
+    cancelEditBtn.addEventListener('click', closeEditModal);
+    saveEditBtn.addEventListener('click', saveEdit);
 
-editModal.addEventListener('click', (e) => {
-    if (e.target === editModal) closeEditModal();
-});
+    editModal.addEventListener('click', (e) => {
+        if (e.target === editModal) closeEditModal();
+    });
+}
 
 // 14. Inicialización
 loadTheme();

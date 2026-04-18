@@ -34,27 +34,50 @@
 
         <main>
             <section class="input-section">
-                <div class="input-group">
-                    <input type="text" id="todo-input" placeholder="¿Qué tienes pendiente hoy?">
-                    <select id="category-select" class="category-input">
-                        <option value="trabajo">Trabajo</option>
-                        <option value="estudio">Estudio</option>
-                        <option value="hobbie">Hobbie</option>
-                    </select>
-                    <input type="time" id="todo-time">
-                    <button id="now-btn" class="btn-secondary" title="Hora actual">⏰</button>
+                <div class="input-wrapper">
+                    <input type="text" id="todo-input" placeholder="Agrega una nueva tarea..." class="task-input">
                 </div>
-                <div class="checkbox-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="important-check">
-                        <span>Importante</span>
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="can-wait-check">
-                        <span>Puede esperar</span>
-                    </label>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="label">Categoría</label>
+                        <div class="category-chips">
+                            <button class="chip" data-category="trabajo">💼 Trabajo</button>
+                            <button class="chip" data-category="estudio">📚 Estudio</button>
+                            <button class="chip" data-category="hobbie">🎮 Hobbie</button>
+                        </div>
+                        <select id="category-select" style="display:none;">
+                            <option value="trabajo">Trabajo</option>
+                            <option value="estudio">Estudio</option>
+                            <option value="hobbie">Hobbie</option>
+                        </select>
+                    </div>
                 </div>
-                <button id="add-btn">Agregar</button>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="label">Hora</label>
+                        <div class="time-group">
+                            <input type="time" id="todo-time" class="time-input">
+                            <button id="now-btn" class="btn-time">Ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="flags-group">
+                        <label class="flag-option">
+                            <input type="checkbox" id="important-check">
+                            <span>⭐ Importante</span>
+                        </label>
+                        <label class="flag-option">
+                            <input type="checkbox" id="can-wait-check">
+                            <span>⏳ Puede esperar</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button id="add-btn" class="btn-add">+ Agregar Tarea</button>
             </section>
 
             <section class="list-section">
