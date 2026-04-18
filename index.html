@@ -14,7 +14,10 @@
                     <h1>Mi Lista de Tareas</h1>
                     <p>Organiza tu día de forma eficiente</p>
                 </div>
-                <button id="theme-btn" class="theme-btn" title="Cambiar tema">🌙</button>
+                <div class="header-buttons">
+                    <button id="theme-btn" class="theme-btn" title="Cambiar tema">🌙</button>
+                    <button id="colors-btn" class="colors-btn" title="Colores">🎨</button>
+                </div>
             </div>
             <div class="stats">
                 <div class="stat-item">
@@ -88,6 +91,41 @@
                 <div class="modal-footer">
                     <button id="cancel-edit" class="btn-secondary">Cancelar</button>
                     <button id="save-edit" class="btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de confirmación de eliminación -->
+        <div id="delete-modal" class="modal">
+            <div class="modal-content modal-small">
+                <div class="modal-header">
+                    <h2>Eliminar Tarea</h2>
+                    <button class="close-btn" id="close-delete-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro que deseas eliminar esta tarea? Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel-delete" class="btn-secondary">Cancelar</button>
+                    <button id="confirm-delete" class="btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selector de colores -->
+        <div id="colors-modal" class="modal">
+            <div class="modal-content modal-small">
+                <div class="modal-header">
+                    <h2>Selecciona un Color</h2>
+                    <button class="close-btn" id="close-colors-modal">&times;</button>
+                </div>
+                <div class="colors-grid">
+                    <button class="color-option" data-color="purple" style="background: #5b21b6;" title="Púrpura">✓</button>
+                    <button class="color-option" data-color="blue" style="background: #0066ff;" title="Azul">✓</button>
+                    <button class="color-option" data-color="green" style="background: #34c759;" title="Verde">✓</button>
+                    <button class="color-option" data-color="red" style="background: #ff3b30;" title="Rojo">✓</button>
+                    <button class="color-option" data-color="orange" style="background: #ff9500;" title="Naranja">✓</button>
+                    <button class="color-option" data-color="pink" style="background: #ff2d55;" title="Rosa">✓</button>
                 </div>
             </div>
         </div>

@@ -20,9 +20,22 @@ const editCategory = document.getElementById('edit-category');
 const editImportant = document.getElementById('edit-important');
 const editCanWait = document.getElementById('edit-can-wait');
 
+// Delete modal elements
+const deleteModal = document.getElementById('delete-modal');
+const closeDeleteModalBtn = document.getElementById('close-delete-modal');
+const cancelDeleteBtn = document.getElementById('cancel-delete');
+const confirmDeleteBtn = document.getElementById('confirm-delete');
+
+// Colors modal elements
+const colorsModal = document.getElementById('colors-modal');
+const closeColorsModalBtn = document.getElementById('close-colors-modal');
+const colorsBtn = document.getElementById('colors-btn');
+const colorOptions = document.querySelectorAll('.color-option');
+
 // 2. Estado de la aplicación
 let todos = [];
 let editingId = null;
+let deletingId = null;
 
 // 3. Cargar datos del localStorage
 function loadFromLocalStorage() {
@@ -175,10 +188,21 @@ function toggleTodo(id) {
 
 // 11. Función para eliminar una tarea
 function deleteTodo(id) {
-    todos = todos.filter(todo => todo.id !== id);
+    deletingId = id;
+    deleteModal.classList.add('active');
+}
+
+function confirmDelete() {
+    todos = todos.filter(todo => todo.id !== deletingId);
     saveToLocalStorage();
     renderTodos();
     updateStats();
+    closeDeleteModal();
+}
+
+function closeDeleteModal() {
+    deleteModal.classList.remove('active');
+    deletingId = null;
 }
 
 // 12. Función para cambiar tema
@@ -200,6 +224,36 @@ function loadTheme() {
         document.body.classList.add('dark-mode');
         updateThemeBtn();
     }
+    
+    const color = localStorage.getItem('color') || 'purple';
+    setThemeColor(color);
+}
+
+// 15. Funciones de color
+const colorMap = {
+    purple: { primary: '#5b21b6', light: '#7c3aed' },
+    blue: { primary: '#0066ff', light: '#0080ff' },
+    green: { primary: '#34c759', light: '#50e3c2' },
+    red: { primary: '#ff3b30', light: '#ff5a4a' },
+    orange: { primary: '#ff9500', light: '#ffb143' },
+    pink: { primary: '#ff2d55', light: '#ff6482' }
+};
+
+function setThemeColor(color) {
+    const colors = colorMap[color] || colorMap.purple;
+    document.documentElement.style.setProperty('--primary', colors.primary);
+    document.documentElement.style.setProperty('--primary-hover', colors.light);
+    localStorage.setItem('color', color);
+}
+
+function updateActiveColor() {
+    const savedColor = localStorage.getItem('color') || 'purple';
+    colorOptions.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.color === savedColor) {
+            btn.classList.add('active');
+        }
+    });
 }
 
 // 13. Event Listeners
@@ -216,6 +270,35 @@ saveEditBtn.addEventListener('click', saveEdit);
 
 editModal.addEventListener('click', (e) => {
     if (e.target === editModal) closeEditModal();
+});
+
+closeDeleteModalBtn.addEventListener('click', closeDeleteModal);
+cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+confirmDeleteBtn.addEventListener('click', confirmDelete);
+
+deleteModal.addEventListener('click', (e) => {
+    if (e.target === deleteModal) closeDeleteModal();
+});
+
+colorsBtn.addEventListener('click', () => {
+    colorsModal.classList.add('active');
+    updateActiveColor();
+});
+
+closeColorsModalBtn.addEventListener('click', () => {
+    colorsModal.classList.remove('active');
+});
+
+colorsModal.addEventListener('click', (e) => {
+    if (e.target === colorsModal) colorsModal.classList.remove('active');
+});
+
+colorOptions.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const color = btn.dataset.color;
+        setThemeColor(color);
+        colorsModal.classList.remove('active');
+    });
 });
 
 // 14. Inicialización
