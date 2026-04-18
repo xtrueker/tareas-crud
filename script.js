@@ -1,5 +1,7 @@
 // 1. Selección de elementos del DOM
 const todoInput = document.getElementById('todo-input');
+const todoTime = document.getElementById('todo-time');
+const nowBtn = document.getElementById('now-btn');
 const addBtn = document.getElementById('add-btn');
 const todoList = document.getElementById('todo-list');
 
@@ -9,6 +11,7 @@ let todos = [];
 // 3. Función para agregar una tarea
 function addTodo() {
     const taskText = todoInput.value.trim();
+    const taskTime = todoTime.value;
 
     if (taskText === "") {
         alert("Por favor, escribe una tarea.");
@@ -18,15 +21,25 @@ function addTodo() {
     const newTodo = {
         id: Date.now(),
         text: taskText,
+        time: taskTime,
         completed: false
     };
 
     todos.push(newTodo);
     todoInput.value = "";
+    todoTime.value = "";
     todoInput.focus();
 
     // Actualizar la vista
     renderTodos();
+}
+
+// 3.5 Función para setear la hora actual
+function setCurrentTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    todoTime.value = `${hours}:${minutes}`;
 }
 
 // 4. Función para renderizar la lista de tareas
@@ -41,7 +54,10 @@ function renderTodos() {
         
         // Estructura interna del item
         li.innerHTML = `
-            <span class="${todo.completed ? 'completed' : ''}">${todo.text}</span>
+            <div class="task-content">
+                <span class="${todo.completed ? 'completed' : ''}">${todo.text}</span>
+                ${todo.time ? `<small class="task-time">a las ${todo.time}</small>` : ''}
+            </div>
             <div class="actions">
                 <button class="complete-btn" onclick="toggleTodo(${todo.id})">✔️</button>
                 <button class="delete-btn" onclick="deleteTodo(${todo.id})">🗑️</button>
@@ -68,6 +84,7 @@ function toggleTodo(id) {
 
 // 4. Event Listeners
 addBtn.addEventListener('click', addTodo);
+nowBtn.addEventListener('click', setCurrentTime);
 
 // También permitir agregar con la tecla Enter
 todoInput.addEventListener('keypress', (e) => {

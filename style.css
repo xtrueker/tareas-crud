@@ -69,14 +69,23 @@ header p {
     background: white;
 }
 
-#todo-input:focus {
+#todo-time {
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+#todo-input:focus, #todo-time:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-#add-btn {
-    padding: 0.75rem 1.5rem;
-    background: var(--primary);
+#now-btn {
+    padding: 0.75rem 1rem;
+    background: #10b981;
     color: white;
     border: none;
     border-radius: 12px;
@@ -85,16 +94,28 @@ header p {
     transition: background 0.2s ease, transform 0.1s active;
 }
 
-#add-btn:hover {
-    background: var(--primary-hover);
+#now-btn:hover {
+    background: #059669;
 }
 
-#add-btn:active {
+#now-btn:active {
     transform: scale(0.96);
 }
 
 ul {
     list-style: none;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
 }
 
 .todo-item:hover {
@@ -105,6 +126,16 @@ ul {
     text-decoration: line-through;
     color: var(--text-muted);
     opacity: 0.6;
+}
+
+.task-content {
+    flex: 1;
+}
+
+.task-time {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-left: 10px;
 }
 
 .actions {
