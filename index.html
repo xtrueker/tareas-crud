@@ -16,10 +16,9 @@
                 </div>
                 <button id="theme-btn" class="theme-btn" title="Cambiar tema">🌙</button>
             </div>
-            
             <div class="stats">
                 <div class="stat-item">
-                    <span class="stat-label">Total</span>
+                    <span class="stat-label">Totales</span>
                     <span class="stat-value" id="total-tasks">0</span>
                 </div>
                 <div class="stat-item">
@@ -27,8 +26,8 @@
                     <span class="stat-value" id="completed-tasks">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">Pendientes</span>
-                    <span class="stat-value" id="pending-tasks">0</span>
+                    <span class="stat-label">Progreso</span>
+                    <span class="stat-value" id="progress-percent">0%</span>
                 </div>
             </div>
         </header>
@@ -37,16 +36,64 @@
             <section class="input-section">
                 <div class="input-group">
                     <input type="text" id="todo-input" placeholder="¿Qué tienes pendiente hoy?">
+                    <select id="category-select" class="category-input">
+                        <option value="trabajo">Trabajo</option>
+                        <option value="estudio">Estudio</option>
+                        <option value="hobbie">Hobbie</option>
+                    </select>
                     <input type="time" id="todo-time">
                     <button id="now-btn" class="btn-secondary" title="Hora actual">⏰</button>
                 </div>
-                <button id="add-btn">Agregar Tarea</button>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="important-check">
+                        <span>Importante</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="can-wait-check">
+                        <span>Puede esperar</span>
+                    </label>
+                </div>
+                <button id="add-btn">Agregar</button>
             </section>
 
             <section class="list-section">
-                <ul id="todo-list"></ul>
+                <ul id="todo-list">
+                    <!-- Las tareas se cargarán aquí dinámicamente -->
+                </ul>
             </section>
         </main>
+
+        <!-- Modal de edición -->
+        <div id="edit-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Editar Tarea</h2>
+                    <button class="close-btn" id="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="edit-input" placeholder="Texto de la tarea">
+                    <select id="edit-category">
+                        <option value="trabajo">Trabajo</option>
+                        <option value="estudio">Estudio</option>
+                        <option value="hobbie">Hobbie</option>
+                    </select>
+                    <input type="time" id="edit-time">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="edit-important">
+                        <span>Importante</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="edit-can-wait">
+                        <span>Puede esperar</span>
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel-edit" class="btn-secondary">Cancelar</button>
+                    <button id="save-edit" class="btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
